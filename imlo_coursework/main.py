@@ -26,7 +26,7 @@ test_data = Flowers102(
 
 # Names for each label from (line 25) since as far as I can tell pytorch does not seem to have this data included.
 # https://github.com/tensorflow/datasets/blob/master/tensorflow_datasets/datasets/oxford_flowers102/oxford_flowers102_dataset_builder.py
-names = pd.read_csv("data/flowers-names.csv").squeeze()
+names = pd.read_csv("data/flowers-names.csv", header=None).squeeze()
 
 # Plotting a random selection of images using matplotlib
 figure = plt.figure(figsize=(8, 8))
@@ -36,7 +36,7 @@ for i in range(1, cols * rows + 1):
     img, label = train_data[int(sample_idx)]
     figure.add_subplot(rows, cols, i)
     plt.axis("off")
-    plt.title(names[label-1])
+    plt.title(names[label])
 
     # pytorch uses CxHxW, whereas matplotlib uses HxWxC, so we need to fix that.
     plt.imshow(img.permute(1,2,0))
