@@ -11,7 +11,10 @@ repository = "https://github.com/cooperjl/imlo-coursework"
 python = "^3.11"
 numpy = "^1.26.4"
 pandas = "^2.2.2"
+matplotlib = "^3.8.4"
+scipy = "^1.13.0"
 torch = "^2.3.0"
+torchvision = "^0.18.0"
 
 [build-system]
 requires = ["poetry-core"]
