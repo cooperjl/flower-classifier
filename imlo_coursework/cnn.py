@@ -12,7 +12,7 @@ class CNN(nn.Module):
         # pooling layer(s)
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
         # fully connected layer(s)
-        self.fc1 = nn.Linear(in_features=39200, out_features=128)
+        self.fc1 = nn.Linear(in_features=115200, out_features=128) # 39200 # 115200
         self.fc2 = nn.Linear(in_features=128, out_features=classes)
 
     def forward(self, x):
