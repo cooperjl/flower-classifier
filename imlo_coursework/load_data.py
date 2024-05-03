@@ -7,9 +7,14 @@ from torchvision.datasets import Flowers102
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
+batch_size = 64
+
 transform = transforms.Compose(
     [transforms.ToTensor(),         # Transform the data into a tensor.
-     transforms.Resize((500, 500)), # Resize every image to be 500x500.
+     #transforms.Resize((64, 64)), # Resize every image to be 500x500.
+     transforms.RandomResizedCrop(size=(128, 128), antialias=True),
+     transforms.RandomHorizontalFlip(p=0.5),
+     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
      ])
 
 train_data = Flowers102(
@@ -34,9 +39,9 @@ test_data = Flowers102(
     )
 
 
-train_dataloader = DataLoader(train_data, batch_size=64, shuffle=True)
-val_dataloader = DataLoader(val_data, batch_size=64, shuffle=True)
-test_dataloader = DataLoader(test_data, batch_size=64, shuffle=True)
+train_dataloader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
+val_dataloader = DataLoader(val_data, batch_size=batch_size, shuffle=True)
+test_dataloader = DataLoader(test_data, batch_size=batch_size, shuffle=True)
 
 
 # Names for each label from (line 25) since as far as I can tell pytorch does not seem to have this data included.
