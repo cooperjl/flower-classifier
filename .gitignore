@@ -1,5 +1,5 @@
 # Do not commit the dataset
-data/flowers-102/
+data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
