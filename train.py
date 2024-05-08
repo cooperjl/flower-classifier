@@ -8,8 +8,9 @@ network = CNN()
 network = network.to(device)
 
 loss_fn = nn.CrossEntropyLoss()
-optimizer = optim.Adam(network.parameters(), lr=0.001, weight_decay=0.01)
-epochs = 100 
+# optimizer = optim.Adam(network.parameters(), lr=0.001, weight_decay=0.001)
+optimizer = optim.SGD(network.parameters(), lr=0.001, momentum=0.9, weight_decay=0.001)
+epochs = 300 
 
 
 def train_one_epoch():
@@ -17,7 +18,7 @@ def train_one_epoch():
 
     running_loss = 0
     running_accuracy = 0
-    for (inputs, labels) in train_dataloader:
+    for inputs, labels in train_dataloader:
         inputs = inputs.to(device)
         labels = labels.to(device)
 
@@ -44,7 +45,7 @@ def validate_one_epoch():
 
     running_loss = 0
     running_accuracy = 0
-    for (inputs, labels) in val_dataloader:
+    for inputs, labels in val_dataloader:
         inputs = inputs.to(device)
         labels = labels.to(device)
 
@@ -60,7 +61,6 @@ def validate_one_epoch():
     accuracy = 100 * (running_accuracy / total)
 
     print(f"Validation - Loss: {loss:.4f}, Accuracy: {accuracy:.2f}%")
-
 
 
 for epoch in range(epochs):

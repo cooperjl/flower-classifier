@@ -1,41 +1,49 @@
 import csv
 import numpy as np
 import torch
-import torchvision.transforms as transforms
+import torchvision.transforms.v2 as transforms
 from torch.utils.data import DataLoader
 from torchvision.datasets import Flowers102
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-batch_size = 64
+batch_size = 16
 
-transform = transforms.Compose(
-    [transforms.ToTensor(),         # Transform the data into a tensor.
-     #transforms.Resize((64, 64)), # Resize every image to be 500x500.
-     transforms.RandomResizedCrop(size=(128, 128), antialias=True),
-     transforms.RandomHorizontalFlip(p=0.5),
-     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-     ])
+transform_train = transforms.Compose([
+    transforms.PILToTensor(),
+    transforms.RandomResizedCrop(size=(128, 128), antialias=True),
+    transforms.RandomHorizontalFlip(p=0.5),
+    transforms.RandomRotation(degrees=(0, 180)),
+    transforms.ToDtype(torch.float32, scale=True),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+])
+
+transform_val_test = transforms.Compose([
+    transforms.PILToTensor(),
+    transforms.Resize(size=(128, 128), antialias=True),
+    transforms.ToDtype(torch.float32, scale=True),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+])
 
 train_data = Flowers102(
     root="data",
     split="train",
     download=True,
-    transform=transform
+    transform=transform_train
     )
 
 val_data = Flowers102(
     root="data",
     split="val",
     download=True,
-    transform=transform
+    transform=transform_val_test
     )
 
 test_data = Flowers102(
     root="data",
     split="test",
     download=True,
-    transform=transform
+    transform=transform_val_test
     )
 
 
