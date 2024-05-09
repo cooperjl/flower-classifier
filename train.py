@@ -10,7 +10,7 @@ network = network.to(device)
 loss_fn = nn.CrossEntropyLoss()
 # optimizer = optim.Adam(network.parameters(), lr=0.001, weight_decay=0.001)
 optimizer = optim.SGD(network.parameters(), lr=0.001, momentum=0.9, weight_decay=0.001)
-epochs = 300 
+epochs = 400
 
 
 def train_one_epoch():
