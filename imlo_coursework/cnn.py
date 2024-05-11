@@ -23,9 +23,9 @@ class CNN(nn.Module):
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
 
         # fully connected layer(s)
-        self.fc1 = nn.Linear(in_features=2048, out_features=4096)
-        self.fc2 = nn.Linear(in_features=4096, out_features=4096)
-        self.fc3 = nn.Linear(in_features=4096, out_features=102)
+        self.fc1 = nn.Linear(in_features=2048, out_features=2048)
+        self.fc2 = nn.Linear(in_features=2048, out_features=2048)
+        self.fc3 = nn.Linear(in_features=2048, out_features=102)
 
         # dropout regularisation
         self.drop = nn.Dropout(p=0.5)

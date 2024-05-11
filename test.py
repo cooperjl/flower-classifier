@@ -4,7 +4,7 @@ from imlo_coursework.cnn import CNN
 from imlo_coursework.load_data import test_dataloader, device
 
 model = CNN()
-model.load_state_dict(torch.load("model.pth"))
+model.load_state_dict(torch.load("model.pt"))
 
 model = model.to(device)
 model.eval()

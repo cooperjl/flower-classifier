@@ -1,4 +1,5 @@
-from imlo_coursework import visualise_data
+from imlo_coursework import normal_values
 
 if __name__ == "__main__":
-    visualise_data.grid_of_flowers()
+    normal_values.calculate_values_for_normalise()
+    

@@ -71,4 +71,4 @@ for epoch in range(epochs):
 
 
 print("Finished training")
-torch.save(network.state_dict(), 'model.pth')
+torch.save(network.state_dict(), 'model.pt')
