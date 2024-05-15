@@ -9,6 +9,10 @@ batch_size = 16
 
 crop_size = (128, 128)
 
+# NOTE: if you run this and get any issues, please reduce this to 0 if necessary. Setting this as a higher number
+# is very worth it for performance reasons.
+num_workers = 8
+
 # values outputted from normal_values.py
 mean =[0.4702, 0.3985, 0.3176]
 std = [0.2599, 0.2085, 0.2217]
@@ -20,7 +24,7 @@ transform_train = transforms.Compose([
     transforms.Resize(size=160, antialias=True),
     transforms.RandomCrop(size=crop_size),
     transforms.RandomHorizontalFlip(p=0.5),
-    transforms.RandAugment(),
+    transforms.RandAugment(num_ops=4, magnitude=9),
     transforms.ToDtype(torch.float32, scale=True),
     transforms.Normalize(mean=mean, std=std),
 ])
@@ -32,6 +36,11 @@ transform_val_test = transforms.Compose([
     transforms.ToDtype(torch.float32, scale=True),
     transforms.Normalize(mean=mean, std=std),
 ])
+
+# CutMix and MixUp transforms
+cutmix = transforms.CutMix(num_classes=102)
+mixup = transforms.MixUp(num_classes=102)
+cutmix_or_mixup = transforms.RandomChoice([cutmix, mixup])
 
 train_data = Flowers102(
     root="data",
@@ -55,7 +64,7 @@ test_data = Flowers102(
 )
 
 
-train_dataloader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
-val_dataloader = DataLoader(val_data, batch_size=batch_size, shuffle=True)
-test_dataloader = DataLoader(test_data, batch_size=batch_size, shuffle=True)
+train_dataloader = DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=num_workers)
+val_dataloader = DataLoader(val_data, batch_size=batch_size, shuffle=True, num_workers=num_workers)
+test_dataloader = DataLoader(test_data, batch_size=batch_size, shuffle=True, num_workers=num_workers)
 
