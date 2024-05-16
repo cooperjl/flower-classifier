@@ -5,13 +5,12 @@ import torch.nn.functional as F
 class CNN(nn.Module):
     def __init__(self):
         super().__init__()
-        # Convolutional layers with a kernel (filter) size of 3x3. bias is set to False, since
-        # we apply BatchNorm2d which cancels this out, so disable bias for performance reasons.
-        self.conv1 = nn.Conv2d(in_channels=3, out_channels=32, kernel_size=3, bias=False)
-        self.conv2 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, bias=False)
-        self.conv3 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, bias=False)
-        self.conv4 = nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, bias=False)
-        self.conv5 = nn.Conv2d(in_channels=256, out_channels=512, kernel_size=3, bias=False)
+        # Convolutional layers with a kernel (filter) size of 3x3.
+        self.conv1 = nn.Conv2d(in_channels=3, out_channels=32, kernel_size=3)
+        self.conv2 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3)
+        self.conv3 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3)
+        self.conv4 = nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3)
+        self.conv5 = nn.Conv2d(in_channels=256, out_channels=512, kernel_size=3)
 
         # Batch normalisation layers.
         self.batch_norm1 = nn.BatchNorm2d(num_features=32)
