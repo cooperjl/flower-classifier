@@ -37,3 +37,10 @@ python test.py
 ```
 It will output a loss and an accuracy for the model. This varies between about 70%-73%, due to randomness when
 training.
+
+To calculate the normal values, run:
+```shell
+python main.py
+```
+This will calculate the values used when normalising the datasets. This is calculated using only the training data.
+
