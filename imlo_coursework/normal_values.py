@@ -22,19 +22,20 @@ def calculate_values_for_normalise():
 
     train_dataloader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
 
-    mean = 0
-    std = 0
-    total = 0
+    running_mean = 0
+    running_std = 0
 
     for inputs, _ in train_dataloader:
-        batch_amount = inputs.size(0)
-        inputs = inputs.view(batch_amount, inputs.size(1), -1)
-        mean += inputs.mean(2).sum(0)
-        std += inputs.std(2).sum(0)
-        total += batch_amount
+        # reshape the tensor from (batch_size, 3, 128, 128) to (batch_size, 3, 128*128)
+        inputs = inputs.view(inputs.size(0), inputs.size(1), -1)
+        # calculate the mean and std over the 128*128 dimension which includes all the values of the images
+        # sum those values and add them to running value
+        running_mean += inputs.mean(dim=2).sum(dim=0)
+        running_std += inputs.std(dim=2).sum(dim=0)
 
     # Print the mean and std values for manual copying into load_data.py. This is to avoid having to rerun the 
     # whole normalisation function every time the transform is called as this would be needless overhead.
-    print(f"mean: {mean/total}")
-    print(f"std: {std/total}")
+    # divide by 1020 since that is the total number of images in the training set
+    print(f"mean: {running_mean/1020}")
+    print(f"std: {running_std/1020}")
 
